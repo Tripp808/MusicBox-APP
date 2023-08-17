@@ -38,7 +38,7 @@ To use the MusicBox application, follow these steps:
    Contact
 For any inquiries or feedback, please contact the project maintainers:
 
-Your Name: o.ankeli@alustudent.com
+o.ankeli@alustudent.com
 Feel free to contribute, report issues, or suggest improvements by creating GitHub issues and pull requests in the MusicBox repository. Your contributions are highly appreciated!
 
 
