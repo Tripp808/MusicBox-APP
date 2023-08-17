@@ -9,8 +9,6 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://www.googleapis.com/youtube/v3/"></script>
   </head>
   <body>
     <header class="header">
@@ -50,25 +48,16 @@
         </div>
       </div>
     </section>
-    <section class="youtube-video">
-      <div class="video-container">
-        <iframe
-          id="youtube-player"
-          width="560"
-          height="315"
-          src=""
-          frameborder="0"
-          allowfullscreen
-        ></iframe>
-      </div>
-    </section>
     <script>
-      const youtubeApiKey =
-        "8ad23b0eb0mshee694ccf7efa32fp1c017ejsn35b3dd5020fd";
+      function extractTrackIdFromUrl(url) {
+        const match = url.match(/track\/([a-zA-Z0-9]+)/);
+        return match ? match[1] : null;
+      }
 
       async function downloadSong() {
         const songUrl = document.getElementById("songUrl").value;
 
+        // Extract track ID from the Spotify URL
         const trackId = extractTrackIdFromUrl(songUrl);
 
         if (!trackId) {
@@ -104,25 +93,6 @@
           console.error(error);
         }
       }
-
-      async function init() {
-        // YouTube API setup
-        const videoId = "https://www.youtube.com/watch?v=YxWlaYCA8MU";
-        const videoEmbedUrl = `https://www.youtube.com/embed/${videoId}?key=${youtubeApiKey}`;
-
-        // Set YouTube player source
-        document.getElementById("youtube-player").src = videoEmbedUrl;
-
-        // Download Spotify song
-        await downloadSong();
-      }
-
-      function extractTrackIdFromUrl(url) {
-        const match = url.match(/track\/([a-zA-Z0-9]+)/);
-        return match ? match[1] : null;
-      }
-
-      init();
     </script>
   </body>
 </html>
