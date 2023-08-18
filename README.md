@@ -26,7 +26,7 @@ To use the MusicBox application, follow these steps:
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/MusicBox.git
+   git clone https://github.com/Tripp808/MusicBox-APP
    Contact
 For any inquiries or feedback, please contact me:
 o.ankeli@alustudent.com
