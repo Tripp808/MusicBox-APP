@@ -9,11 +9,12 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
-     <style>
+    <style>
       /* Responsive Styles */
       @media only screen and (max-width: 768px) {
         .header {
           display: flex;
+          position: absolute;
           flex-direction: column;
           align-items: center;
         }
@@ -23,6 +24,7 @@
           flex-direction: column;
           align-items: center;
           margin-top: 10px;
+          margin-right: 12%;
         }
 
         .navbar ul {
@@ -76,6 +78,12 @@
         .music-item p {
           font-size: 14px;
         }
+        .player {
+          align-items: center;
+          display: flex;
+          padding-right: 20%;
+          margin-top: 8%;
+        }
       }
     </style>
   </head>
@@ -110,7 +118,7 @@
           <img src="listener.jpg" alt="Song Image" />
           <h3 id="songTitle">Song Title</h3>
           <p>Artist Name</p>
-          <audio controls id="audioPlayer">
+          <audio controls id="audioPlayer" class="player">
             <source id="audioSource" type="audio/mpeg" />
             Your browser does not support the audio element.
           </audio>
@@ -120,7 +128,14 @@
     <script>
       function extractTrackIdFromUrl(url) {
         const match = url.match(/track\/([a-zA-Z0-9]+)/);
-        return match ? match[1] : null;
+        if (match) {
+          return match[1];
+        }
+
+        const regex =
+          /^https?:\/\/(?:open|play)\.spotify\.com\/(?:track|album|playlist)\/([a-zA-Z0-9]+)/;
+        const extendedMatch = url.match(regex);
+        return extendedMatch ? extendedMatch[1] : null;
       }
 
       async function downloadSong() {
