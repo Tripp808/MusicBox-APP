@@ -10,6 +10,62 @@
       rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+      /* Responsive Styles */
+      @media only screen and (max-width: 768px) {
+        .header {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .navbar {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 20px;
+          justify-content: center;
+        }
+
+        .navbar ul {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .navbar li {
+          margin: 10px 0;
+        }
+
+        /* home content layout for smaller screens */
+        .home-content {
+          text-align: center;
+        }
+
+        .home h1 {
+          font-size: 28px;
+        }
+
+        .home h3 {
+          font-size: 18px;
+        }
+
+        .btn-box {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .btn-box a {
+          margin: 10px 0;
+        }
+
+        /* social media icons */
+        .home-sci {
+          text-align: center;
+          align-items: center;
+          margin-top: 20px;
+          margin-left: 25%;
+        }
+      }
   </head>
   <body>
     <header class="header">
