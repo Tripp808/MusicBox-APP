@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MusicBox - Music</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Responsive Styles */
+      @media only screen and (max-width: 768px) {
+        .header {
+          display: flex;
+          position: absolute;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .navbar {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 10px;
+          margin-right: 12%;
+        }
+
+        .navbar ul {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .navbar li {
+          margin: 10px 0;
+        }
+
+        /* music section */
+        .music-content {
+          text-align: center;
+        }
+
+        .music-content h2 {
+          font-size: 24px;
+        }
+
+        .music-content p {
+          font-size: 16px;
+        }
+
+        /* search box */
+        .search-box {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 20px;
+        }
+
+        .search-box input,
+        .search-box button {
+          margin: 10px 0;
+        }
+
+        /* music list item */
+        .music-item {
+          text-align: center;
+        }
+
+        .music-item img {
+          max-width: 100%;
+        }
+
+        .music-item h3 {
+          font-size: 20px;
+        }
+
+        .music-item p {
+          font-size: 14px;
+        }
+        .player {
+          align-items: center;
+          display: flex;
+          padding-right: 20%;
+          margin-top: 8%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <a href="index.html" class="logo">MusicBox</a>
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li>
+            <button type="button" onclick="navigateToMusicPage()">Music</button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <section class="music-section">
+      <div class="music-content">
+        <h2>Explore Music</h2>
+        <p>
+          Discover a world of melodies and rhythms that resonate with your soul.
+          Our carefully curated collection of tracks from diverse artists will
+          take you on a journey of emotions and creativity.
+        </p>
+      </div>
+      <div class="search-box">
+        <input type="text" id="songUrl" placeholder="Enter Spotify Song URL" />
+        <button type="button" onclick="downloadSong()">Download Song</button>
+      </div>
+      <div class="music-list">
+        <!-- Music Item -->
+        <div class="music-item">
+          <img src="listener.jpg" alt="Song Image" />
+          <h3 id="songTitle">Song Title</h3>
+          <p>Artist Name</p>
+          <audio controls id="audioPlayer" class="player">
+            <source id="audioSource" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+    </section>
+    <script>
+      function extractTrackIdFromUrl(url) {
+        const match = url.match(/track\/([a-zA-Z0-9]+)/);
+        if (match) {
+          return match[1];
+        }
+
+        const regex =
+          /^https?:\/\/(?:open|play)\.spotify\.com\/(?:track|album|playlist)\/([a-zA-Z0-9]+)/;
+        const extendedMatch = url.match(regex);
+        return extendedMatch ? extendedMatch[1] : null;
+      }
+
+      async function downloadSong() {
+        const songUrl = document.getElementById("songUrl").value;
+
+        // Extract track ID from the Spotify URL
+        const trackId = extractTrackIdFromUrl(songUrl);
+
+        if (!trackId) {
+          console.error("Invalid Spotify URL");
+          return;
+        }
+
+        const endpoint = `https://spotify-downloader3.p.rapidapi.com/spotify/download/?url=${encodeURIComponent(
+          `https://open.spotify.com/track/${trackId}`
+        )}`;
+
+        const headers = {
+          "X-RapidAPI-Key":
+            "8ad23b0eb0mshee694ccf7efa32fp1c017ejsn35b3dd5020fd",
+          "X-RapidAPI-Host": "spotify-downloader3.p.rapidapi.com",
+        };
+
+        try {
+          const response = await fetch(endpoint, { method: "GET", headers });
+          const result = await response.json(); // Parse the JSON response
+
+          const songTitle = document.getElementById("songTitle");
+          const audioSource = document.getElementById("audioSource");
+          const audioPlayer = document.getElementById("audioPlayer");
+
+          songTitle.textContent = result.title;
+          audioSource.src = result.audio;
+
+          // Load and play audio
+          audioPlayer.load();
+          audioPlayer.play();
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    </script>
+  </body>
+</html>
